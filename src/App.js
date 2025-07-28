@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState, useRef, useEffect } from "react";
 import {
   BrowserRouter,
@@ -6,7 +5,7 @@ import {
   Route,
   Link,
   useNavigate,
-  useLocation
+  useLocation,
 } from "react-router-dom";
 import "./App.css";
 import { AuthProvider } from "./context/AuthContext";
@@ -15,13 +14,14 @@ import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
 function InnerApp() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
-  // Close dropdown when clicking outside
+  // Close menu if clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -50,6 +50,7 @@ function InnerApp() {
               {menuOpen && (
                 <div className="dropdown-menu">
                   <Link to="/home" onClick={() => setMenuOpen(false)}>Home</Link>
+                  <Link to="/dashboard" onClick={() => setMenuOpen(false)}>Dashboard</Link>
                   <Link to="/chatbot" onClick={() => setMenuOpen(false)}>Chatbot</Link>
                   <button onClick={() => { handleLogout(); setMenuOpen(false); }}>
                     Logout
@@ -69,6 +70,7 @@ function InnerApp() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<Home />} />
         <Route path="/chatbot" element={<AIChatbot />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
       {!hideNav && (
         <footer>

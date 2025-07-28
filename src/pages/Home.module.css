@@ -1,137 +1,68 @@
-.root {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.header {
+/* src/pages/Home.module.css */
+.wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
+  padding: 2rem;
 }
-.headerText {
+
+.card {
+  background-color: white;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
   text-align: center;
 }
+
 .title {
   font-size: 2rem;
-  font-weight: 600;
-  margin: 0;
-}
-.subtitle {
-  font-size: 1.1rem;
-  color: #555;
-}
-.doctorImage {
-  width: 80px;
-  height: auto;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-.cardGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
-}
-.card {
-  background: #fff;
-  border: 1px solid #eee;
-  border-radius: 0.75rem;
-  padding: 1.5rem;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-.icon {
-  color: #2463EB;
+  font-weight: bold;
   margin-bottom: 0.75rem;
+  color: #1e88e5;
 }
-.cardTitle {
+
+.subtitle {
   font-size: 1.2rem;
-  font-weight: 500;
-  margin: 0.5rem 0;
-}
-.cardDescription {
-  font-size: 0.95rem;
+  margin-bottom: 2rem;
   color: #555;
 }
-.cardLoader {
-  border: 4px solid #F3F3F3;
-  border-top: 4px solid #2463EB;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  animation: spin 1s linear infinite;
+
+.buttonRow {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
-@keyframes spin {
-  0% {transform: rotate(0deg);}
-  100% {transform: rotate(360deg);}
-}
-.upgradeContainer {
-  text-align: center;
-  margin-top: 2rem;
-}
-.upgradeButton {
-  background: #2463EB;
-  color: #fff;
-  border: none;
+
+.primaryButton, .secondaryButton {
   padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: background 0.2s ease;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s ease;
 }
-.upgradeButton:hover {
-  background: #1D4FD6;
+
+.primaryButton {
+  background-color: #4CAF50;
 }
-/* Extra responsive padding for small screens */
-@media (max-width: 768px) {
-  .root {
-    padding: 1rem;
-  }
+
+.secondaryButton {
+  background-color: #1976D2;
 }
-/* Make card icons bigger on desktop */
-@media (min-width: 768px) {
-  .icon {
-    font-size: 2rem;
-  }
+
+.primaryButton:hover {
+  background-color: #43a047;
 }
-/* Subtle scale-up animation on hover */
-.card:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+
+.secondaryButton:hover {
+  background-color: #1565c0;
 }
-/* Smooth fade-in when cards appear */
-.card {
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeInUp 0.4s forwards;
-}
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-/* Make upgrade button wider on mobile */
-@media (max-width: 480px) {
-  .upgradeButton {
-    width: 100%;
-  }
-}
-.transcript {
+
+.chatbotContainer {
   margin-top: 1rem;
-  font-size: 1rem;
-  color: #334155;
-  text-align: center;
 }
