@@ -94,7 +94,6 @@ export default function FloatingChatBot({ context = {}, summary = "" }) {
 
   return (
     <>
-      {/* Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-4 right-4 z-50 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg"
@@ -107,7 +106,6 @@ export default function FloatingChatBot({ context = {}, summary = "" }) {
           <div className="chatbot-container">
             <h2 className="chatbot-title">🧠 AI Chatbot</h2>
 
-            {/* Language Selector */}
             <div className="flex justify-center items-center gap-2 mb-2">
               <Languages size={16} />
               <select
@@ -123,7 +121,6 @@ export default function FloatingChatBot({ context = {}, summary = "" }) {
               </select>
             </div>
 
-            {/* App Links */}
             <div className="app-navigation">
               {appLinks.map(app => (
                 <a
@@ -138,7 +135,6 @@ export default function FloatingChatBot({ context = {}, summary = "" }) {
               ))}
             </div>
 
-            {/* Messages */}
             <div className="chatbot-messages">
               {messages.map((m, i) => (
                 <div key={i} className="chatbot-message">
@@ -147,7 +143,6 @@ export default function FloatingChatBot({ context = {}, summary = "" }) {
               ))}
             </div>
 
-            {/* Input */}
             <div className="chatbot-input-row">
               <input
                 className="chatbot-input"
