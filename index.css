@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optional: custom base styles */
+body {
+  @apply bg-background text-gray-800 font-sans;
+}
+
+h1, h2, h3 {
+  @apply text-primary font-bold;
+}

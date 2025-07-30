@@ -1,20 +1,37 @@
-# Dependency directories
+# Windows system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Node modules
 node_modules/
-.pnp/
-.pnp.js
-# Environment files
+
+# Build outputs
+build/
+dist/
+
+# Firebase
+.firebase/
+firebase-debug.log
+
+# Environment variables
 .env
 .env.*.local
-# Log files
+
+# Editor/project files
+.vscode/
+.idea/
+
+# Test coverage
+coverage/
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-# Build output
-build/
-dist/
-# VSCode settings
-.vscode/
-# Mac system files
+
+# OS/React tooling
 .DS_Store
-# OS generated files
-Thumbs.db
+.cache/
+.next/
+out/

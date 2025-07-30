@@ -7,7 +7,6 @@
 .banner {
   position: relative;
   height: 240px;
-  background: url("/assets/banner.jpg") no-repeat center center;
   background-size: cover;
   display: flex;
   align-items: center;

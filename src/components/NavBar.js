@@ -1,9 +1,10 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "../context/AuthContext";
 import { signOut } from "firebase/auth";
-import { auth } from "./firebase";
-import "./Navbar.css";
+import { auth } from "../firebase";
+import styles from "./NavBar.module.css";
+
 const apps = [
   { name: "GingerTips", url: "https://gingertips.vercel.app" },
   { name: "OneDoctor", url: "https://onedoctor.vercel.app" },
@@ -16,11 +17,13 @@ const apps = [
   { name: "LegalAid", url: "https://legalaid.vercel.app" },
   { name: "Investify", url: "https://investify.vercel.app" },
 ];
-const Navbar = () => {
+
+const NavBar = () => {
   const location = useLocation();
   const { user } = useAuth();
   const hideOnPaths = ["/", "/login", "/signup"];
   if (hideOnPaths.includes(location.pathname)) return null;
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -28,23 +31,19 @@ const Navbar = () => {
       console.error("Logout failed:", err);
     }
   };
+
   return (
-    <nav className="navbar">
-      <div className="navbar-logo">:earth_africa: TravelPlanner</div>
-      <div className="navbar-links">
+    <nav className={styles.navbar}>
+      <div className={styles["navbar-logo"]}>🌍 TravelPlanner</div>
+      <div className={styles["navbar-links"]}>
         <Link to="/home">Home</Link>
         {apps.map((app) => (
-          <a
-            key={app.name}
-            href={app.url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a key={app.name} href={app.url} target="_blank" rel="noopener noreferrer">
             {app.name}
           </a>
         ))}
         {user && (
-          <button onClick={handleLogout} className="logout-btn">
+          <button onClick={handleLogout} className={styles["logout-btn"]}>
             Logout
           </button>
         )}
@@ -52,4 +51,5 @@ const Navbar = () => {
     </nav>
   );
 };
-export default Navbar;
+
+export default NavBar;
