@@ -1,28 +1,59 @@
-.pageWrapper {
+.wrapper {
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
-}
-.card {
-  background: #fff;
-  padding: 2rem;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  justify-content: center;
+  background: #f5f7fa;
 }
 
-/* In App.css */
-footer {
+.hero {
+  width: 100%;
+  height: 320px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  border-radius: 12px;
   text-align: center;
-  padding: 1rem;
-  font-size: 0.9rem;
-  color: #666;
-  border-top: 1px solid #ccc;
 }
-footer a {
-  color: #2563eb;
+
+.title {
+  color: #fff;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #eee;
+  margin-bottom: 1rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.primary,
+.secondary {
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
   text-decoration: none;
-  margin: 0 0.5rem;
+  font-weight: 600;
 }
-footer a:hover {
-  text-decoration: underline;
+
+.primary {
+  background: #4f46e5;
+  color: white;
+}
+
+.secondary {
+  background: white;
+  color: #4f46e5;
 }

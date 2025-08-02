@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { MessageCircle, Mic, Languages } from "lucide-react";
+import { MessageCircle, Mic, Languages, Volume2, VolumeX, Image } from "lucide-react";
 import "./FloatingChatBot.css";
 
 const appLinks = [
@@ -21,7 +21,19 @@ export default function FloatingChatBot({ context = {}, summary = "" }) {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [lang, setLang] = useState("en");
+  const [speak, setSpeak] = useState(false);
   const recognitionRef = useRef(null);
+  const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    if (!speak) return;
+    const last = messages[messages.length - 1];
+    if (last && last.from === "bot") {
+      const utter = new SpeechSynthesisUtterance(last.text);
+      utter.lang = lang;
+      window.speechSynthesis.speak(utter);
+    }
+  }, [messages, speak, lang]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -92,6 +104,37 @@ export default function FloatingChatBot({ context = {}, summary = "" }) {
     recognitionRef.current.start();
   };
 
+  const loadTesseract = () => {
+    if (window.Tesseract) return Promise.resolve(window.Tesseract);
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "https://unpkg.com/tesseract.js@4.0.2/dist/tesseract.min.js";
+      script.onload = () => resolve(window.Tesseract);
+      script.onerror = reject;
+      document.body.appendChild(script);
+    });
+  };
+
+  const handleOCRClick = () => {
+    if (fileInputRef.current) fileInputRef.current.click();
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setLoading(true);
+    try {
+      const Tesseract = await loadTesseract();
+      const { data: { text } } = await Tesseract.recognize(file, lang);
+      setInput(text.trim());
+    } catch (err) {
+      console.error("OCR error", err);
+      alert("OCR failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <button
@@ -156,6 +199,16 @@ export default function FloatingChatBot({ context = {}, summary = "" }) {
               <button onClick={handleVoiceInput} className="chatbot-button" title="Voice Input">
                 <Mic size={16} />
               </button>
+              <button onClick={handleOCRClick} className="chatbot-button" title="OCR from image">
+                <Image size={16} />
+              </button>
+              <button
+                onClick={() => setSpeak(s => !s)}
+                className={`chatbot-button ${speak ? "active" : ""}`}
+                title="Toggle speech"
+              >
+                {speak ? <VolumeX size={16} /> : <Volume2 size={16} />}
+              </button>
               <button
                 className="chatbot-button"
                 onClick={sendMessage}
@@ -164,6 +217,13 @@ export default function FloatingChatBot({ context = {}, summary = "" }) {
                 {loading ? "..." : "Send"}
               </button>
             </div>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              accept="image/*"
+              style={{ display: "none" }}
+            />
           </div>
         </div>
       )}

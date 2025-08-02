@@ -80,3 +80,7 @@
   background: #a5b4fc;
   cursor: not-allowed;
 }
+
+.chatbot-button.active {
+  background: #16a34a;
+}

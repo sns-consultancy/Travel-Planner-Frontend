@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { fetchCars } from '../api';
 import FloatingChatBot from '../components/FloatingChatBot';
 import { summarizeResultsWithOpenAI } from '../utils/aiUtils';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function CarsPage() {
   const [location, setLocation] = useState('');
@@ -9,6 +10,7 @@ export default function CarsPage() {
   const [days, setDays] = useState(1);
   const [cars, setCars] = useState([]);
   const [summary, setSummary] = useState('');
+  const { t } = useLanguage();
 
   const search = async () => {
     try {
@@ -22,30 +24,34 @@ export default function CarsPage() {
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2>🚗 Search Car Rentals</h2>
-      <input
-        value={location}
-        onChange={e => setLocation(e.target.value)}
-        placeholder="Location"
-        style={{ marginRight: '1rem' }}
-      />
-      <input
-        type="date"
-        value={startDate}
-        onChange={e => setStartDate(e.target.value)}
-        style={{ marginRight: '1rem' }}
-      />
-      <input
-        type="number"
-        min="1"
-        value={days}
-        onChange={e => setDays(e.target.value)}
-        style={{ marginRight: '1rem' }}
-      />
-      <button onClick={search}>Search</button>
+    <div className="max-w-xl mx-auto p-8 space-y-4">
+      <h2 className="text-2xl font-semibold">🚗 {t('carsTitle')}</h2>
+      <div className="flex flex-col space-y-2">
+        <input
+          value={location}
+          onChange={e => setLocation(e.target.value)}
+          placeholder={t('locationPlaceholder')}
+          className="border p-2 rounded"
+        />
+        <input
+          type="date"
+          value={startDate}
+          onChange={e => setStartDate(e.target.value)}
+          className="border p-2 rounded"
+        />
+        <input
+          type="number"
+          min="1"
+          value={days}
+          onChange={e => setDays(e.target.value)}
+          className="border p-2 rounded"
+        />
+        <button onClick={search} className="bg-blue-600 text-white py-2 rounded">
+          {t('searchButton')}
+        </button>
+      </div>
 
-      <ul style={{ marginTop: '1rem' }}>
+      <ul className="list-disc pl-5">
         {cars.map(c => (
           <li key={c.company}>
             {c.company} {c.model} - ${c.daily_rate}/day

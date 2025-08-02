@@ -3,7 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
+import logo from "../assets/banner1.jpg.png";
 import styles from "./NavBar.module.css";
+import { useLanguage } from "../context/LanguageContext";
 
 const apps = [
   { name: "GingerTips", url: "https://gingertips.vercel.app" },
@@ -21,6 +23,7 @@ const apps = [
 const NavBar = () => {
   const location = useLocation();
   const { user } = useAuth();
+  const { language, setLanguage, t } = useLanguage();
   const hideOnPaths = ["/", "/login", "/signup"];
   if (hideOnPaths.includes(location.pathname)) return null;
 
@@ -34,16 +37,29 @@ const NavBar = () => {
 
   return (
     <nav className={styles.navbar}>
-      <div className={styles["navbar-logo"]}>🌍 TravelPlanner</div>
-      <div className={styles["navbar-links"]}>
-        <Link to="/home">Home</Link>
+      <Link to="/home" className={styles.logoLink}>
+        <img src={logo} alt="TravelPlanner" className={styles.logo} />
+      </Link>
+      <div className={styles.links}>
+        <Link to="/home">{t("home")}</Link>
+        <Link to="/signup">{t("signUp")}</Link>
+        <Link to="/login">{t("login")}</Link>
+        <Link to="/floatingchatbot">{t("askAI")}</Link>
         {apps.map((app) => (
           <a key={app.name} href={app.url} target="_blank" rel="noopener noreferrer">
             {app.name}
           </a>
         ))}
+        <select
+          value={language}
+          onChange={e => setLanguage(e.target.value)}
+          className={styles.langSelect}
+        >
+          <option value="en">EN</option>
+          <option value="es">ES</option>
+        </select>
         {user && (
-          <button onClick={handleLogout} className={styles["logout-btn"]}>
+          <button onClick={handleLogout} className={styles.logoutButton}>
             Logout
           </button>
         )}
