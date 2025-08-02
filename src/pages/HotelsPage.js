@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { fetchHotels } from "../api";
 import FloatingChatBot from "../components/FloatingChatBot";
 import { summarizeResultsWithOpenAI } from "../utils/aiUtils";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function HotelsPage() {
   const [destination, setDestination] = useState("");
@@ -9,6 +10,7 @@ export default function HotelsPage() {
   const [nights, setNights] = useState(1);
   const [hotels, setHotels] = useState([]);
   const [summary, setSummary] = useState("");
+  const { t } = useLanguage();
 
   const search = async () => {
     try {
@@ -22,31 +24,35 @@ export default function HotelsPage() {
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2>🏨 Search Hotels</h2>
-      <input
-        value={destination}
-        onChange={(e) => setDestination(e.target.value)}
-        placeholder="Destination"
-        style={{ marginRight: "1rem" }}
-      />
-      <input
-        type="date"
-        value={checkIn}
-        onChange={(e) => setCheckIn(e.target.value)}
-        style={{ marginRight: "1rem" }}
-      />
-      <input
-        type="number"
-        min="1"
-        value={nights}
-        onChange={(e) => setNights(e.target.value)}
-        style={{ marginRight: "1rem" }}
-      />
-      <button onClick={search}>Search</button>
+    <div className="max-w-xl mx-auto p-8 space-y-4">
+      <h2 className="text-2xl font-semibold">🏨 {t('hotelsTitle')}</h2>
+      <div className="flex flex-col space-y-2">
+        <input
+          value={destination}
+          onChange={e => setDestination(e.target.value)}
+          placeholder={t('destinationPlaceholder') || 'Destination'}
+          className="border p-2 rounded"
+        />
+        <input
+          type="date"
+          value={checkIn}
+          onChange={e => setCheckIn(e.target.value)}
+          className="border p-2 rounded"
+        />
+        <input
+          type="number"
+          min="1"
+          value={nights}
+          onChange={e => setNights(e.target.value)}
+          className="border p-2 rounded"
+        />
+        <button onClick={search} className="bg-blue-600 text-white py-2 rounded">
+          {t('searchButton')}
+        </button>
+      </div>
 
-      <ul style={{ marginTop: "1rem" }}>
-        {hotels.map((h) => (
+      <ul className="list-disc pl-5">
+        {hotels.map(h => (
           <li key={h.name}>
             {h.name} - ${h.price_per_night}/night
           </li>

@@ -1,20 +1,27 @@
-/* src/pages/Home.module.css */
 .wrapper {
   min-height: 100vh;
   background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 2rem;
+  justify-content: flex-start;
+  padding-bottom: 2rem;
 }
 
-.card {
-  background-color: white;
-  padding: 2.5rem;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
+.hero {
   width: 100%;
+  height: 260px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.45);
+  padding: 2rem;
+  border-radius: 12px;
   text-align: center;
 }
 
@@ -22,24 +29,25 @@
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 0.75rem;
-  color: #1e88e5;
+  color: #fff;
 }
 
 .subtitle {
   font-size: 1.2rem;
-  margin-bottom: 2rem;
-  color: #555;
+  margin-bottom: 1rem;
+  color: #eee;
 }
 
 .buttonRow {
   display: flex;
   justify-content: center;
   gap: 1.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 
-.primaryButton, .secondaryButton {
-  padding: 0.75rem 1.5rem;
+.primaryButton,
+.secondaryButton {
+  padding: 0.6rem 1.2rem;
   border-radius: 8px;
   font-weight: bold;
   text-decoration: none;
@@ -48,11 +56,11 @@
 }
 
 .primaryButton {
-  background-color: #4CAF50;
+  background-color: #4caf50;
 }
 
 .secondaryButton {
-  background-color: #1976D2;
+  background-color: #1976d2;
 }
 
 .primaryButton:hover {
@@ -64,5 +72,7 @@
 }
 
 .chatbotContainer {
-  margin-top: 1rem;
+  width: 100%;
+  max-width: 600px;
+  margin-top: 2rem;
 }

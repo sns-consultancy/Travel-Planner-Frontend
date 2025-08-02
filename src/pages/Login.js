@@ -4,11 +4,13 @@ import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { useAuth } from "../context/AuthContext";
 import styles from "./Signup.module.css";
+
 const speakWelcome = (username) => {
   const utterance = new SpeechSynthesisUtterance(`Welcome back, ${username}.`);
   utterance.lang = "en-US";
   speechSynthesis.speak(utterance);
 };
+
 export default function Login() {
   const { login, loginWithGoogle } = useAuth();
   const [email, setEmail] = useState("");
@@ -18,23 +20,42 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem("darkMode") === "true");
   const [useFaceId, setUseFaceId] = useState(false);
+  const [useThumb, setUseThumb] = useState(false);
   const navigate = useNavigate();
   const emailRef = useRef();
+
+  const startVoiceInput = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Voice recognition not supported in this browser.");
+      return;
+    }
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.onresult = (e) => {
+      const text = e.results[0][0].transcript;
+      setEmail(text);
+    };
+    recognition.start();
+  };
+
   useEffect(() => {
     emailRef.current?.focus();
   }, []);
+
   useEffect(() => {
     localStorage.setItem("darkMode", darkMode);
   }, [darkMode]);
+
   const performLogin = async () => {
     setError("");
     setMessage("");
     if (!email) return setError("Please enter your email.");
-    if (!useFaceId && !password) return setError("Enter password or enable Face ID.");
+    if (!useFaceId && !useThumb && !password) return setError("Enter password or enable biometrics.");
     try {
       setLoading(true);
-      if (useFaceId) {
-        alert("Face ID simulated.");
+      if (useFaceId || useThumb) {
+        alert("Biometric authentication simulated.");
         localStorage.setItem("token", "loggedin");
         localStorage.setItem("user", JSON.stringify({ firstName: email }));
         speakWelcome(email);
@@ -52,6 +73,7 @@ export default function Login() {
       setLoading(false);
     }
   };
+
   const handleGoogleLoginSuccess = async (credentialResponse) => {
     try {
       const credential = credentialResponse.credential;
@@ -71,6 +93,7 @@ export default function Login() {
       setError("Google login failed.");
     }
   };
+
   return (
     <div className={`${styles.pageWrapper} ${darkMode ? styles.dark : ""}`}>
       <div className={styles.card}>
@@ -99,8 +122,9 @@ export default function Login() {
               disabled={loading}
               placeholder="Enter email"
             />
+            <button type="button" onClick={startVoiceInput} className={styles.iconButton} disabled={loading}>🎤</button>
           </label>
-          {!useFaceId && (
+          {!useFaceId && !useThumb && (
             <label className={styles.label}>
               Password:
               <input
@@ -112,15 +136,26 @@ export default function Login() {
               />
             </label>
           )}
-          <label className={styles.checkbox}>
-            <input
-              type="checkbox"
-              checked={useFaceId}
-              onChange={(e) => setUseFaceId(e.target.checked)}
-              disabled={loading}
-            />
-            <span>Use Face ID / Touch ID</span>
-          </label>
+          <div className={styles.actionsRow}>
+            <label className={styles.checkbox}>
+              <input
+                type="checkbox"
+                checked={useFaceId}
+                onChange={(e) => setUseFaceId(e.target.checked)}
+                disabled={loading}
+              />
+              <span>Use Face ID</span>
+            </label>
+            <label className={styles.checkbox}>
+              <input
+                type="checkbox"
+                checked={useThumb}
+                onChange={(e) => setUseThumb(e.target.checked)}
+                disabled={loading}
+              />
+              <span>Use Thumbprint</span>
+            </label>
+          </div>
           <button type="submit" className={styles.button} disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>

@@ -153,3 +153,34 @@
     height: 36px;
   }
 }
+.links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.langSelect {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.4rem;
+}
+
+.langSelect option {
+  color: #333;
+}
+
+.logoutButton {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.logoutButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+}

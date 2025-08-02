@@ -1,39 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import "./Landing.module.css";
+import banner from "../assets/banner.png";
+import styles from "./Landing.module.css";
+import { useLanguage } from "../context/LanguageContext";
 
-const Landing = () => (
-  <div className="landing">
-    <h1>Welcome to TravelPlanner</h1>
-    <p>Plan your dream trips with ease!</p>
-    <div className="landing-buttons">
-      <Link to="/signup">Sign Up</Link>
-      <Link to="/login">Login</Link>
-    </div>
-  </div>
-);
-
-export default Landing;
-
-
-
-{/*import React from "react";
-import { Link } from "react-router-dom";
-function Landing() {
+const Landing = () => {
+  const { t } = useLanguage();
   return (
-    <div style={{ padding: "2rem", textAlign: "center" }}>
-      <h1>Welcome to <strong>TravelPlanner</strong></h1>
-      <p>Plan your dream trips with ease!</p>
-      <div style={{ marginTop: "1rem" }}>
-        <Link to="/signup" style={{ marginRight: "1rem", textDecoration: "none", color: "blue" }}>
-          Sign Up
-        </Link>
-        <Link to="/login" style={{ textDecoration: "none", color: "blue" }}>
-          Login
-        </Link>
+    <div className={styles.wrapper}>
+      <div className={styles.hero} style={{ backgroundImage: `url(${banner})` }}>
+        <div className={styles.overlay}>
+          <h1 className={styles.title}>{t("landingTitle")}</h1>
+          <p className={styles.subtitle}>{t("landingSubtitle")}</p>
+          <div className={styles.buttons}>
+            <Link to="/signup" className={styles.primary}>{t("signUp")}</Link>
+            <Link to="/login" className={styles.secondary}>{t("login")}</Link>
+          </div>
+        </div>
       </div>
     </div>
   );
-}
+};
+
 export default Landing;
-*/}
